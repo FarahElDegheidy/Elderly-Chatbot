@@ -1,0 +1,1646 @@
+/* Chat.css */
+@import url('https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap');
+html {
+    font-size: 100%; /* Default: 16px */
+}
+
+/* Define new blue color palette */
+:root {
+    --primary: #0966d0;
+    --primary-dark: #054690;
+    --accent: #4d94ea;
+    --text-dark: #1f1f1f;
+    --text-light: #ffffff;
+    --bg-light: #f5faff;
+    --form-bg: rgba(255, 255, 255, 0.75);
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --bot-message-bg: #e0f2fe; /* A light blue for bot messages */
+    --user-message-bg: var(--primary); /* Primary blue for user messages */
+    --button-bg-light: #e6f2ff; /* Lighter blue for some buttons */
+    --button-text-dark: var(--primary-dark);
+}
+
+
+@import url("https://fonts.googleapis.com/css2?family=Oldenburg&family=Cormorant+Garamond:wght@400;600&display=swap");
+
+/* Ensure full viewport height and prevent main scrolling on body/html */
+body, html, #root { /* Assuming #root is your React app mount point */
+    margin: 0;
+    padding: 0;
+    font-family: "Cormorant Garamond", Segoe UI, sans-serif; /* Added sans-serif fallback */
+    height: 100%;
+    overflow: hidden; /* Crucial: Prevents body scrolling */
+    /* Background image remains, but colors will overlay it */
+    background: url('../assets/texture background.jpeg') center center / cover no-repeat fixed;
+    margin: 0;
+    padding: 0;
+    background-color: #0a0a0a;
+    scroll-behavior: smooth;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+
+/* Main container for the chat layout */
+.chat-page {
+    display: flex; /* Flex container for the main layout */
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Prevent this container from scrolling */
+    position: relative; /* For absolute positioning of side panels */
+    padding: 0; /* Remove padding from here, apply to inner elements */
+    box-sizing: border-box; /* Include padding/border in element's total width/height */
+    flex-direction: column; /* Default to column layout for mobile */
+}
+
+/* --- Mobile Header --- */
+/* This new header will house the mobile toggle buttons and the main title on small screens */
+.mobile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--form-bg); /* Use form-bg for header background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative; /* For z-index and internal positioning */
+    z-index: 10; /* Ensure it's above the chat window */
+    flex-shrink: 0; /* Prevent it from shrinking */
+    height: 60px; /* Explicit height for mobile header */
+    box-sizing: border-box;
+}
+
+.mobile-header-title {
+    font-family: "Oldenburg", serif;
+    font-size: 1.8rem; /* Adjusted size for mobile header */
+    color: var(--text-dark); /* Use text-dark for title */
+    margin: 0 auto; /* Center the title */
+    text-align: center;
+    position: absolute; /* Position relative to .mobile-header */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap; /* Prevent title from wrapping */
+}
+
+/* --- Mobile-First Panel Styles (Default: Off-Canvas) --- */
+/* These styles apply to the chat history bar and info panel by default on mobile */
+.chat-history-bar,
+.info-panel-bar {
+    position: fixed; /* Fixed position relative to viewport */
+    top: 0;
+    height: 100vh; /* Take full viewport height */
+    width: 80vw; /* On mobile, panels take 80% of screen width */
+    max-width: 350px; /* Limit max width for tablets/larger phones */
+    background-color: var(--form-bg); /* Use form-bg for panel background */
+    z-index: 1000; /* Ensure they are on top */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease; /* Smooth slide transition */
+    padding: 20px; /* Existing padding */
+    box-shadow: var(--shadow); /* Use shadow variable */
+    display: flex; /* Use flex to manage internal content */
+    flex-direction: column;
+    overflow-y: auto; /* Allow content inside panel to scroll if too long */
+    box-sizing: border-box;
+    padding-top: 60px; /* Add padding to account for the mobile header */
+}
+
+/* Initial off-canvas positions for mobile */
+.chat-history-bar {
+    left: 0;
+    transform: translateX(-100%); /* Hidden off-screen to the left */
+    border-radius: 0 16px 16px 0; /* Rounded on the visible edge when open */
+}
+.info-panel-bar {
+    right: 0;
+    transform: translateX(100%); /* Hidden off-screen to the right */
+    border-radius: 16px 0 0 16px; /* Rounded on the visible edge when open */
+}
+
+/* Class to open panels on mobile (toggled by JavaScript) */
+.chat-history-bar.open-mobile {
+    transform: translateX(0%);
+}
+.info-panel-bar.open-mobile {
+    transform: translateX(0%);
+}
+
+/* Mobile Toggle Buttons (Hamburger for History, Info for Info Panel) */
+.mobile-toggle-btn {
+    /* Positioned within .mobile-header, so fixed is removed */
+    position: static; /* No longer fixed to viewport */
+    background-color: var(--primary); /* Use primary blue for buttons */
+    color: var(--text-light); /* White text */
+    border: none;
+    padding: 10px; /* Adjusted padding for square button */
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1001; /* Above panels */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex; /* To center icon */
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+.mobile-toggle-btn:hover {
+    background-color: var(--primary-dark); /* Darker primary on hover */
+}
+
+/* Close buttons within off-canvas panels (mobile only) */
+.close-panel-btn { /* Renamed from close-history-btn/close-info-btn for consistency */
+    position: absolute;
+    top: 10px;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--primary); /* Primary blue for close button */
+    z-index: 1002;
+    padding: 5px; /* Make it easier to tap */
+}
+.chat-history-bar .close-panel-btn { right: 15px; }
+.info-panel-bar .close-panel-btn { left: 15px; } /* Adjust based on your panel's content direction */
+
+/* Overlay when a mobile panel is open */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998; /* Below panels, above chat window */
+    transition: opacity 0.3s ease;
+    opacity: 1; /* Default to visible when rendered */
+}
+
+/* Main Chat Window (always visible, fills remaining space) */
+.chat-window {
+    flex: 1; /* Takes all available space horizontally */
+    display: flex;
+    flex-direction: column;
+    /* Height calculation adjusted to ensure input is visible */
+    height: calc(100vh - 60px); /* Subtract mobile header height */
+    background-color: var(--form-bg); /* Use form-bg for chat window background */
+    border-radius: 0; /* Remove rounded corners on mobile if it fills screen */
+    padding: 10px; /* Adjust padding for mobile */
+    box-shadow: none; /* No shadow on mobile as it fills the screen */
+    box-sizing: border-box;
+    position: relative; /* For z-index if needed, or other positioned children */
+    z-index: 1; /* Ensure it's below the overlay and panels */
+}
+
+/* Specific styling for the mode selection window to center its content */
+.chat-window.mode-selection-window {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Internal Chat Window Scrolling for messages */
+.chat-messages {
+    flex-grow: 1; /* Takes remaining space within .chat-window */
+    overflow-y: auto; /* Allows internal scrolling for messages */
+    padding-right: 5px; /* Existing scrollbar padding */
+    padding-top: 10px; /* Add some padding at the top of messages */
+    padding-bottom: 10px; /* Add some padding at the bottom of messages */
+    margin-bottom: 0; /* Remove original margin-bottom as padding-bottom handles it */
+    min-height: 0; /* Crucial: Allows flex item to shrink below its content size if needed */
+}
+
+/* Input Container at the bottom of the chat window */
+.input-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    /* margin-top: 10px; Removed margin-top, padding will handle spacing */
+    flex-shrink: 0; /* Prevents it from shrinking */
+    padding: 10px; /* Add padding around the input container itself */
+    background-color: var(--form-bg); /* Give it a background to stand out */
+    border-top: 1px solid var(--accent); /* A subtle border at the top */
+    box-sizing: border-box; /* Include padding in height */
+}
+
+.input-container input {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--accent); /* Use accent for border */
+    font-family: "Cormorant Garamond", serif;
+}
+
+.input-container button {
+    padding: 10px 16px;
+    font-size: 1rem;
+    border-radius: 12px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    background-color: var(--button-bg-light); /* Primary blue for send button */
+    color: var(--primary); /* White text */
+    transition: background-color 0.3s ease;
+}
+
+.input-container button:hover {
+    background-color: #649ee5be; /* Darker primary on hover */
+    color: white;
+}
+
+/* --- Desktop/Tablet Styles (Media Queries) --- */
+@media (min-width: 768px) { /* Styles applied for screens 768px and wider */
+    .chat-page {
+        flex-direction: row; /* Layout side-by-side */
+        gap: 20px; /* Space between panels */
+        padding: 20px; /* Restore original padding */
+    }
+
+    /* Hide mobile header on desktop */
+    .mobile-header {
+        display: none;
+    }
+
+    /* Panels are static and have their defined widths on desktop */
+    .chat-history-bar,
+    .info-panel-bar {
+        position: static; /* Not fixed on desktop */
+        height: auto; /* Let flexbox control height */
+        transform: translateX(0); /* Always visible unless collapsed */
+        z-index: auto; /* Reset z-index */
+        color: var(--text-dark);
+        font-family: "Cormorant Garamond", serif;
+        border-radius: 16px; /* Restore desktop border radius */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Restore shadow */
+        flex-shrink: 0; /* Prevent from shrinking */
+        padding-top: 20px; /* Restore original padding-top for desktop */
+    }
+
+    .chat-history-bar {
+        width: 200px; /* Example desktop width */
+        background-color: var(--bg-light); /* Use bg-light for history bar */
+    }
+
+    /* Collapsed state for chat history bar */
+    .chat-history-bar.collapsed {
+        width: 60px; /* Narrower width to show only icon */
+        padding: 10px;
+        overflow: hidden;
+        transition: width 0.3s ease, padding 0.3s ease;
+    }
+
+    .info-panel-bar {
+        width: 300px; /* Example desktop width */
+        background-color: var(--bg-light); /* Use form-bg for info panel */
+    }
+
+    .chat-window {
+        flex: 1; /* Takes remaining space */
+        height: auto; /* Let flexbox control height */
+        border-radius: 16px; /* Restore desktop border radius */
+        padding: 20px; /* Restore desktop padding */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Restore shadow */
+        z-index: auto; /* Reset z-index */
+    }
+
+    /* Hide mobile specific elements on desktop */
+    .mobile-toggle-btn,
+    .close-panel-btn, /* Hide close buttons within panels on desktop */
+    .overlay {
+        display: none;
+    }
+
+    /* Ensure desktop collapse button is visible for chat history */
+    .chat-history-header .collapse-btn {
+        display: block; /* Or whatever its default visibility should be */
+    }
+
+    /* Ensure chat history list is visible by default on desktop unless explicitly collapsed */
+    .chat-history-bar .chat-log-list {
+        display: block;
+    }
+
+    /* Show desktop chat title */
+    .desktop-chat-title {
+        display: block;
+    }
+
+    /* New Chat button specific for history bar on desktop */
+    .new-chat-history-btn {
+        display: flex; /* Ensure it's visible */
+        margin-bottom: 15px; /* Space below button */
+        width: 100%; /* Make it full width of the history bar */
+        justify-content: center; /* Center content */
+    }
+
+    /* History controls container on desktop */
+    .history-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center items horizontally */
+        gap: 10px; /* Space between controls */
+        margin-bottom: 20px; /* Space below the controls block */
+        padding-bottom: 15px; /* Padding at the bottom of the controls block */
+        border-bottom: 1px solid var(--accent); /* Separator line */
+    }
+
+    /* Style for the wrappers of ComfortModeToggle and FontSizeSelector */
+    .history-controls .history-control-item {
+        background-color: var(--button-bg-light);
+        color: var(--button-text-dark);
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.05rem; /* Match new-chat-btn font size */
+        padding: 8px 18px; /* Match new-chat-btn padding */
+        border: none;
+        border-radius: 25px; /* Match new-chat-btn border-radius */
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Center content within the item */
+        gap: 10px; /* For internal icons/text */
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%; /* Ensure it takes full width */
+        box-sizing: border-box; /* Include padding in width */
+        justify-content: space-between;
+    }
+
+    .history-controls .history-control-item:hover {
+        background-color: #649ee5be;
+        transform: translateY(-1px);
+        color: white;
+    }
+
+    /* Adjust the select element inside font-size-selector to match the button style */
+    .history-controls .font-size-control-item .font-size-selector select {
+        /* Reset some default select styles that might conflict */
+        -webkit-appearance: none; /* Remove default arrow on WebKit browsers */
+        -moz-appearance: none; /* Remove default arrow on Firefox */
+        appearance: none; /* Remove default arrow */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23054690' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); /* Custom arrow */
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 16px;
+
+        flex: 1; /* Allow select to take available space */
+        padding: 8px 18px; /* Match button padding */
+        padding-right: 2.5rem; /* Make space for the custom arrow */
+        border-radius: 25px; /* Match button border-radius */
+        border: 0; /* Changed from 'none' to '0' for stronger reset */
+        margin-right: -0.5rem;
+        margin-left: -4rem;
+        outline: none; /* Added to remove focus outline */
+        box-shadow: none; /* Added to remove any native box-shadow */
+        font-family: "Cormorant Garamond", serif; /* Match button font */
+        font-size: 1.05rem; /* Match button font size */
+        font-weight: bolder;
+        background-color: transparent; /* Ensure it's transparent */
+        color: var(--button-text-dark); /* Inherit from parent .history-control-item */
+        cursor: pointer;
+        width: 100%; /* Ensure select takes full width of its parent */
+
+        
+    }
+
+    /* Ensure the font-size-selector div itself also gets the background and border-radius */
+    .history-controls .font-size-selector {
+        background-color: transparent; /* Changed to transparent to inherit from .history-control-item */
+        border-radius: 25px; /* Kept for consistency, but inherited */
+        box-shadow: none; /* Remove redundant shadow */
+        padding: 0; /* Remove padding from this div as it's now on the select */
+        display: flex; /* Ensure flex layout for select and potential label */
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Ensure ComfortModeToggle's internal button (if it has one) gets styled */
+    /* This is a more general rule, assuming ComfortModeToggle renders a button directly */
+    .history-controls .comfort-mode-toggle button { /* Assuming it renders a button */
+        background-color: transparent; /* Inherit from parent .history-control-item */
+        color: inherit; /* Inherit from parent .history-control-item */
+        border: none;
+        padding: 0;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.1rem;
+        cursor: inherit;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+    }
+    
+    /* Styles for collapsed state of history bar */
+    .chat-history-bar.collapsed .chat-log-list, /* Hide the list when collapsed */
+    .chat-history-bar.collapsed h3, /* Hide the "Past Chats" title */
+    .chat-history-bar.collapsed .history-controls { /* Hide the controls block */
+        display: none;
+    }
+
+    .chat-history-bar.collapsed .chat-history-header {
+        justify-content: center; /* Center the collapse button when title is hidden */
+        margin-bottom: 0; /* Remove margin when only button is visible */
+        padding-bottom: 0;
+        border-bottom: none; /* Remove border when title is hidden */
+    }
+
+    .chat-history-bar.collapsed .collapse-btn {
+        margin: 0; /* Remove any external margins */
+        padding: 0; /* Remove padding if it affects centering */
+        /* Ensure the button itself is visible and styled as needed */
+        font-size: 2.2em; /* Make the icon a bit larger */
+    }
+}
+
+/* Fine-tuning for very small mobile screens */
+@media (max-width: 480px) {
+    .chat-page {
+        padding: 0; /* No padding on chat-page for very small screens */
+    }
+
+    .chat-window {
+        padding: 10px; /* Reduce padding further for very small screens */
+    }
+
+    .chat-history-bar, .info-panel-bar {
+        width: 100vw; /* Take full width on very small screens */
+        border-radius: 0; /* No border radius if it takes full width */
+    }
+
+    .mobile-header-title {
+        font-size: 1.5rem; /* Adjust title size for smaller phones */
+    }
+
+    .voice-circle {
+        width: 140px;
+        height: 140px;
+        font-size: 0.9rem;
+    }
+
+    .chat-log-item {
+        font-size: 0.95rem;
+    }
+
+    .input-container {
+        flex-direction: column;
+        gap: 8px; /* Slightly reduce gap */
+    }
+
+    .input-container input,
+    .input-container button {
+        width: 100%;
+    }
+
+    .mode-selection button {
+        font-size: 0.95rem;
+        padding: 10px 18px;
+    }
+
+    /* New Chat button specific for history bar on mobile */
+    .new-chat-history-btn {
+        display: flex; /* Ensure it's visible */
+        margin-bottom: 15px; /* Space below button */
+        width: 100%; /* Make it full width of the history bar */
+        justify-content: center; /* Center content */
+    }
+
+    /* History controls container on mobile */
+    .history-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center items horizontally */
+        gap: 10px; /* Space between controls */
+        margin-bottom: 20px; /* Space below the controls block */
+        padding-bottom: 15px; /* Padding at the bottom of the controls block */
+        border-bottom: 1px solid var(--accent); /* Separator line */
+    }
+
+    /* Adjust font size selector and comfort mode toggle within history bar */
+    .history-controls .font-size-selector,
+    .history-controls .comfort-mode-toggle {
+        width: 100%; /* Make them full width */
+        justify-content: center;
+         /* Center content if they are flex containers */
+    }
+}
+
+/* Original styles from your previous CSS, adjusted where necessary for new layout structure */
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+/* Hide desktop chat title on mobile */
+.desktop-chat-title {
+    display: none; /* Hidden on mobile by default */
+    font-family: "Oldenburg", serif;
+    font-size: 2rem;
+    color: var(--text-dark); /* Use text-dark for title */
+}
+
+.message {
+    max-width: 75%;
+    padding: 12px 16px;
+    border-radius: 20px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    background-color: var(--bg-light); /* Light background for general messages */
+    align-self: flex-start;
+}
+
+.message.user {
+    background-color: var(--user-message-bg) !important; /* Primary blue for user messages */
+    color: var(--text-light); /* White text */
+    padding: 10px 14px;
+    border-radius: 15px 15px 0 15px;
+    margin: 8px 0;
+    align-self: flex-end;
+    max-width: 75%;
+}
+
+.message.bot {
+    background-color: var(--bot-message-bg) !important; /* Light blue for bot messages */
+    color: var(--text-dark); /* Dark text for bot messages */
+    padding: 10px 14px;
+    border-radius: 15px 15px 15px 0;
+    margin: 8px 0;
+    align-self: flex-end;
+    max-width: 75%;
+}
+
+
+.copy-message-btn {
+    background: none; 
+    border: none;
+    color: var(--primary); 
+    cursor: pointer;
+    padding: 2px;
+    position: absolute; 
+    top: -10px; 
+    right: -10px; 
+    opacity: 1;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px; 
+    z-index: 10; 
+    width: auto; 
+    min-width: 24px; 
+    min-height: 24px; 
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.message-row.bot .bot-message-wrapper {
+    position: relative; 
+    padding-right: 30px; 
+    padding-left: 15px; 
+    box-sizing: border-box; 
+    
+    
+}
+
+.message-row.bot .bot-message-wrapper .message {
+    padding-right: 0px; 
+    padding-left: 0px; 
+}
+
+.copy-message-btn:active {
+    background-color: rgba(0, 0, 0, 0.1); 
+}
+
+.copied-feedback {
+    font-size: 0.8em;
+    color: var(--primary);
+    font-weight: bold;
+    white-space: nowrap;
+    padding: 0 4px;
+    text-align: center;
+
+    /* Animation properties */
+    animation: fadeAndScale 1.5s forwards;
+}
+
+/* Keyframes for the animation */
+@keyframes fadeAndScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+}
+.choice-hint {
+    text-align: center;
+    font-weight: bold;
+    color: var(--primary-dark); /* Darker primary for hints */
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.45rem;
+    flex-shrink: 0;
+}
+
+.suggestions {
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    flex-shrink: 0; /* Prevent suggestions from shrinking */
+    padding-top: 10px; /* Space above suggestions */
+    margin-bottom: 10px; /* Added margin-bottom to suggestions */
+    max-width: 400px; /* Adjust this value as needed (e.g., 700px, 900px) */
+    margin-left: auto;   /* Center the block itself */
+    margin-right: auto;  /* Center the block itself */
+
+}
+
+.suggestion-button {
+    padding: 8px 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--button-bg-light); /* Accent blue for suggestions */
+    color: var(--primary);
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 1rem;
+    font-family: "Cormorant Garamond", serif;
+    text-align: center;
+}
+
+.suggestion-button:hover {
+    background-color: #649ee5be;
+    color: white;
+}
+
+.mic-btn {
+    background-color: var(--primary); /* Primary blue for mic button */
+}
+
+.mic-btn:hover {
+    background-color: var(--primary-dark); /* Darker primary on hover */
+}
+
+.info-panel-header {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.8rem;
+    color: var(--primary); /* Primary blue for info panel title */
+    text-align: center;
+    margin-bottom: 5px;
+    border-bottom: 2px solid var(--accent); /* Accent blue for border */
+    padding-bottom: 0px;
+    flex-shrink: 0; /* Prevent title from shrinking */
+    margin-top: -1.4rem;
+}
+
+
+.current-recipe-box,
+.favourites-box,
+.user-profile-section { /* Added user-profile-box here */
+    background-color: var(--bg-light); /* Light background for these boxes */
+    padding: 2px 0 0 0;
+    border-radius: 20px;
+    text-align: center;
+    justify-items: center;
+    font-size: 1.5rem;
+    font-family: "Cormorant Garamond", serif;
+    color: var(--primary);
+    box-shadow: 0 0px 1px rgba(0,0,0,0.05);
+    flex-shrink: 0; /* Prevent these boxes from shrinking */
+}
+
+.user-profile-section h4 {
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    margin-right: 0.3rem;
+}
+
+
+.current-recipe-box h3,
+.favourites-box h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: bold;
+    text-align: center;
+    color: var(--primary); /* Primary blue for titles */
+}
+
+.current-recipe-box p {
+    white-space: pre-line;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: var(--text-dark); /* Dark text */
+}
+
+.favourites-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.favourites-box li {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--accent); /* Accent blue for border */
+    font-size: 1.15rem;
+    font-style: bold;
+    text-align: center;
+    color: var(--text-dark); /* Dark text */
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
+
+.favourites-box li:hover {
+    background-color: var(--button-bg-light); /* Lighter blue on hover */
+    border-radius: 12px;
+    color: var(--primary-dark); /* Darker primary on hover */
+}
+
+
+.mode-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* 🔹 space between buttons */
+    background-color: transparent; /* Light background for mode selection */
+    padding: 40px 50px;
+    border-radius: 45px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    font-family: "Cormorant Garamond", serif;
+    text-align: center;
+    
+}
+
+.mode-selection h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--text-dark);
+}
+
+.mode-selection button {
+    background-color:rgba(32, 96, 186, 0.882);
+    color: var(--text-light); /* White text */
+    font-size: 16px;
+    font-weight: bold;
+    padding: 14px 24px;
+    width: 280px; /* 🔹 fixed button width */
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.mode-selection button:hover {
+    background-color: var(--primary-dark); /* Darker primary on hover */
+}
+
+.new-chat-btn {
+    background-color: var(--button-bg-light); /* Lighter blue for new chat button */
+    color: var(--button-text-dark); /* Darker text for new chat button */
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.05rem;
+    font-weight: bolder;
+    padding: 8px 18px;
+    min-width: 120px;
+    white-space: nowrap;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-direction: row-reverse; /* Changed to row-reverse to move + to the right */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+}
+
+.new-chat-btn:hover {
+    background-color: #649ee5be; /* Accent blue on hover */
+    transform: translateY(-1px);
+    color: white;
+}
+
+.plus-icon {
+    font-size: 1.9rem;
+    line-height: 1;
+    font-weight: bolder;
+    margin-right: 0.5rem;
+    
+}
+
+.voice-circle {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background-color: var(--primary); /* Primary blue for voice circle */
+    margin: 60px auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-light); /* White text */
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0; /* Prevent voice circle from shrinking */
+}
+
+.voice-circle.listening {
+    box-shadow: 0 0 0 0 rgba(9, 102, 208, 0.4); /* Primary blue shadow */
+    animation: pulse-listen 1.2s infinite;
+}
+
+.voice-circle.speaking {
+    box-shadow: 0 0 0 0 rgba(77, 148, 234, 0.3); /* Accent blue shadow */
+    animation: pulse-speak 1.2s infinite;
+}
+
+.voice-circle.thinking {
+    background-color: var(--accent); /* Accent blue for thinking state */
+    color: var(--primary-dark); /* Darker primary for text */
+    animation: pulse 1.5s infinite;
+}
+
+/* Styles for the source icon container */
+.source-icon-container {
+    position: absolute;
+    top: -10px; /* Adjust this value to control vertical position */
+    right: -25px; /* Adjust this value to control horizontal position */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Styles for the favicon image itself */
+.source-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; /* Makes the image circular */
+    border: 1px solid #ccc; /* Optional: adds a light border */
+    background-color: #fff; /* Optional: adds a white background */
+    object-fit: contain;
+}
+
+
+@keyframes pulse-listen {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(9, 102, 208, 0.4); /* Primary blue */
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 25px 12px rgba(9, 102, 208, 0.3); /* Primary blue */
+        transform: scale(1.08);
+    }
+}
+
+@keyframes pulse-speak {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(77, 148, 234, 0.3); /* Accent blue */
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 30px 16px rgba(77, 148, 234, 0.4); /* Accent blue */
+        transform: scale(1.1);
+    }
+}
+
+.message-row {
+    display: flex;
+    align-items: flex-start;
+    margin: 10px 0;
+    
+    
+}
+
+.message-row.user {
+    flex-direction: row-reverse;
+    
+
+}
+
+
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    background-color: var(--button-bg-light); /* Lighter blue for avatar background */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    margin: 0 10px;
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+.bot-avatar {
+    background-color: var(--bg-light); /* Light background for bot avatar */
+    color: var(--primary-dark); /* Darker primary for bot icon */
+    
+}
+
+.user-avatar {
+    background-color: var(--primary); /* Primary blue for user avatar */
+    color: var(--text-light); /* White for user icon */
+}
+
+
+/* Optional tighter space for bubble */
+.message {
+    padding: 10px 14px;
+    border-radius: 15px;
+    max-width: 75%;
+}
+
+.typing-indicator {
+    background-color: var(--primary-dark); /* Darker primary for typing indicator */
+    color: transparent;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 15px 15px 15px 0;
+    max-width: 75%;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-light); /* White dots */
+    animation: bounce 1.2s infinite ease-in-out;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+.recipe-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Higher z-index for modals */
+}
+
+.recipe-modal {
+    background-color: var(--bg-light); /* Light background for modal */
+    border-radius: 16px;
+    padding: 30px;
+    width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    font-family: "Cormorant Garamond", serif;
+    color: var(--text-dark); /* Dark text */
+    position: relative;
+}
+
+.recipe-modal h2 {
+    font-family: "Oldenburg", serif;
+    font-size: 1.6rem;
+    color: var(--primary); /* Primary blue for modal title */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.recipe-modal p {
+    white-space: pre-line;
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--primary); /* Primary blue for close button */
+    cursor: pointer;
+
+}
+
+.chat-history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.collapse-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: var(--primary); /* Primary blue for collapse button */
+    font-weight: bold;
+    transition: transform 0.2s ease;
+    margin-left: 2rem;
+    margin-top: -1.5rem
+}
+
+/* Desktop collapse behavior for chat history */
+.chat-history-bar.collapsed {
+    width: 60px; /* Narrower width to show only icon */
+    padding: 10px;
+    overflow: hidden;
+    transition: width 0.3s ease, padding 0.3s ease;
+}
+
+.chat-history-bar.collapsed .chat-log-list, /* Hide the list when collapsed */
+.chat-history-bar.collapsed h3, /* Hide the "Past Chats" title */
+.chat-history-bar.collapsed .history-controls { /* Hide the controls block */
+    display: none;
+}
+
+.chat-history-bar h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.2rem;
+    font-weight: bolder;
+    color: var(--primary); /* Primary blue for history title */
+    margin-bottom: 15px;
+    margin-left: 1.4rem;
+    text-align: center;
+}
+
+.chat-log-list { /* Added wrapper for chat logs to control visibility and internal scrolling */
+    flex-grow: 1; /* Allow chat log list to scroll internally */
+    overflow-y: auto;
+}
+
+.chat-log-item {
+    padding: 12px;
+    margin-bottom: 10px;
+    font-size: medium;
+    font-weight: 1000;
+    background-color: var(--button-bg-light); /* Lighter blue for history items */
+    border-radius: 25px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s;
+    color: var(--primary);
+}
+
+.chat-log-item:hover {
+    background-color: #649ee5be; /* Accent blue on hover */
+    color: white;
+}
+
+.user-profile-box {
+    background-color: var(--bg-light); /* Light background for user profile box */
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    font-family: "Cormorant Garamond", serif;
+    color: var(--text-dark); /* Dark text */
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.user-summary {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.profile-icon {
+    font-size: 1.6rem;
+    margin-right: 8px;
+}
+
+.profile-details {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.profile-details h3 {
+    font-size: 1.1rem;
+    color: var(--primary); /* Primary blue for profile details title */
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--accent); /* Accent blue for border */
+    padding-bottom: 4px;
+}
+
+.profile-details ul {
+    margin: 6px 0 12px 16px;
+    padding-left: 0;
+}
+
+.profile-details li {
+    list-style-type: circle;
+}
+
+.dropdown-section {
+    background-color: var(--button-bg-light); /* Lighter blue for editable sections */
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 1rem;
+    align-items: center;
+}
+ 
+.dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: bold;
+    height: 0.9rem;
+    font-size: 1.05rem;
+    color: var(--primary); /* Primary blue for dropdown header */
+    padding: 8px 0 ;
+    border-style: hidden;
+    background-color: transparent;
+    transition: color 0.2s ease;
+    box-shadow: none;
+}
+
+.dropdown-icon-text-group {
+    display: flex;
+    align-items: center; /* Absolutely essential for vertical alignment of icon and text */
+    gap: 8px;
+}
+
+  
+.dropdown-header:hover {
+    color: var(--primary-dark); /* Darker primary on hover */
+}
+
+.dropdown-arrow {
+    font-size: 1rem;
+}
+
+.dropdown-list {
+    margin: 8px 0 12px 12px;
+    padding-left: 0;
+    list-style-type: circle;
+    font-size: 0.95rem;
+    color: var(--text-dark); /* Dark text */
+}
+
+.empty-item {
+    font-style: italic;
+    color: #888;
+}
+
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.profile-avatar {
+    color: var(--primary); /* Primary blue for profile avatar */
+    margin-bottom: 8px;
+}
+
+.user-profile-box h3 {
+    margin: 0;
+    font-family: "Oldenburg", serif;
+    color: var(--text-dark); /* Dark text */
+    font-size: 1.4rem;
+}
+
+.profile-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.editable-section {
+    background: var(--button-bg-light); /* Lighter blue for editable sections */
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+
+.calendar-section {
+    background: var(--button-bg-light); /* Lighter blue for editable sections */
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 0rem;
+    color: var(--primary);
+}
+
+.connect-calendar-button {
+    background: var(--primary); /* Lighter blue for editable sections */
+    padding: 12px;
+    border-radius: 12px;
+    color: white;
+    border-color: var(--accent);
+    width: 100%;
+    font-weight: 700;
+}
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.05rem;
+    color: var(--primary); /* Primary blue for section header */
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+}
+
+.section-body ul {
+    padding-left: 16px;
+    margin: 10px 0;
+    list-style-type: disc;
+}
+
+.section-body li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 1.05rem;
+}
+
+.delete-icon {
+    cursor: pointer;
+    color: #dc3545; /* Red for delete icon */
+    transition: color 0.2s;
+}
+
+.delete-icon:hover {
+    color: #c82333; /* Darker red on hover */
+}
+
+.add-input {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.add-input input {
+    flex: 1;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--accent); /* Accent blue for input border */
+    font-family: "Cormorant Garamond", serif;
+}
+
+.add-input button {
+    background-color: var(--primary); /* Primary blue for add button */
+    color: var(--text-light); /* White text */
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.add-input button:hover {
+    background-color: var(--primary-dark); /* Darker primary on hover */
+}
+
+
+.starter-options {
+    margin-bottom: 20px;
+    background-color: var(--bg-light); /* Light background for starter options */
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    flex-shrink: 0; /* Prevent from shrinking */
+}
+
+.starter-title {
+    font-family: "Oldenburg", serif;
+    font-size: 1.2rem;
+    color: var(--primary); /* Primary blue for starter title */
+    margin-bottom: 12px;
+}
+
+.starter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.starter-buttons button {
+    background-color: var(--button-bg-light); /* Lighter blue for starter buttons */
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 1.25rem;
+    font-family: "Cormorant Garamond", serif;
+    color: var(--primary-dark); /* Darker primary for button text */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.starter-buttons button:hover {
+    background-color: #649ee5be; /* Accent blue on hover */
+    color: white;
+}
+
+.reconnect-notice {
+    text-align: center;
+    background-color: #f8d7da; /* Light red for error notice */
+    color: #721c24; /* Dark red for error text */
+    border: 1px solid #f5c6cb; /* Red border */
+    padding: 1rem;
+    margin: -0.3rem auto;
+    width: fit-content;
+    max-width: 90%;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0; /* Prevent from shrinking */
+}
+
+.reconnect-text {
+    font-size: 1.3rem;
+    font-weight: bolder;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: inherit;
+}
+
+.reconnect-button {
+    background-color: var(--primary); /* Primary blue for reconnect button */
+    color: var(--text-light); /* White text */
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    
+    /* ADDED: A smooth transition for all relevant properties */
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.reconnect-button:hover {
+    background-color: var(--primary-dark); /* Darker primary on hover */
+    
+    /* ADDED: A subtle scale effect and a light shadow on hover */
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.reconnect-button:active {
+    /* ADDED: A slight down-press effect */
+    transform: translateY(0) scale(1);
+    box-shadow: none;
+}
+
+.font-size-selector {
+    /* margin-bottom: 20px; Removed from here, handled by .history-controls gap */
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dark); /* Dark text */
+}
+
+.font-size-selector select {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: inherit;
+    border: 0; /* Changed to 0 for no border */
+    outline: none; /* Removed outline on focus */
+    box-shadow: none; /* Removed any box shadow */
+    background-color: transparent; /* Light background */
+    color: var(--text-dark);
+}
+
+.video-wrapper {
+    padding: 1rem;
+}
+
+.video-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-start;
+}
+
+.video-card {
+    width: 180px;
+    text-align: center;
+    background-color: #f5faff; /* Lighter blue for video card background */
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.video-thumb {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.video-card:hover {
+    transform: scale(1.07);
+}
+
+.video-thumb-link {
+    text-decoration: none;
+    color: inherit;
+    
+}
+
+.video-thumb:hover{
+    transform: scale(1.02);
+}
+
+.video-thumb {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.video-caption {
+    font-size: 1.2rem;
+    padding: 6px 8px;
+    text-align: center;
+    font-weight: bolder;
+    color: rgba(82, 128, 228, 0.957); /* Dark text */
+    height: 100px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+
+.web-results {
+    padding:1rem;
+    background-color: var(--bg-light); /* Light background for web results */
+    border-radius: 1px;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+}
+
+
+.web-card {
+    border-bottom: 2.5px solid var(--accent); /* Accent blue for border */
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+
+.web-title {
+    font-weight: bold;
+    color: var(--primary); /* Primary blue for web title */
+    text-decoration:none;
+    display: block;
+    direction: rtl;
+    text-align: right;
+    margin-bottom: 0.1rem;
+    margin-top: 0.1rem;
+    /* margin-right: 20rem; Removed fixed margin to prevent overflow */
+    font-size: 1.1rem;
+}
+
+.web-title:hover {
+    text-decoration:underline;
+}
+
+.web-snippet {
+    font-size: 0.9rem;
+    color: var(--text-dark); /* Dark text */
+    margin: 0;
+}
+
+/* Optional: Dark mode */
+body.dark .web-title {
+    color: var(--accent);
+}
+
+body.dark .web-snippet {
+    color: #aaa;
+}
+
+body.dark .web-card {
+    border-bottom: 1px solid var(--primary-dark);
+}
+
+/* Additional styling for header controls */
+.header-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align to the right */
+    gap: 5px; /* Space between controls */
+}
+
+.full-prayer-times-viewer {
+  padding: 15px;
+  background-color: var(--text-light);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  flex: 1;
+  font-family: 'Scheherazade New', serif;
+  font-size: 30px;
+}
+
+.full-prayer-times-viewer h2 {
+  font-size: 1.5rem;
+  color: var(--primary);
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.prayer-times-list {
+  list-style: none;
+  padding: 0 px;
+  margin: 0;
+  direction: rtl;
+  text-align: right;
+}
+
+.prayer-times-list li {
+  background-color: var(--bg-light);
+  border: 1px solid --accent;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  margin-left: 2rem;
+  margin-right: -1rem;
+  font-size: 1.1rem;
+  color: var(--primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: large;
+  font-weight: bold;
+}
+
+.prayer-times-list li strong {
+  color: var(--primary);
+ 
+}
+
+.prayer-times-loading,
+.prayer-times-error {
+  padding: 20px;
+  text-align: center;
+  color: #777;
+}
+
+@media (max-width: 600px) {
+  .full-prayer-times-viewer {
+    padding: 10px; /* Reduced padding for smaller screens */
+    border-radius: 0;
+    display:flexbox;
+  }
+
+  .full-prayer-times-viewer h2 {
+    font-size: 1.2rem; /* Smaller font for the title */
+    margin-bottom: 10px;
+  }
+
+  .prayer-times-list li {
+    padding: 10px; /* Reduced padding for list items */
+    font-size: 1.3rem; /* Smaller font size for prayer times */
+    margin-right: -1rem;
+    margin-left: 1rem;
+  }
+}

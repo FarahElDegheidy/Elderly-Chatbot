@@ -1,0 +1,109 @@
+:root {
+    --primary: #0966d0;
+    --primary-dark: #054690;
+    --accent: #4d94ea;
+    --text-dark: #1f1f1f;
+    --text-light: #ffffff;
+    --bg-light: #f5faff;
+    --form-bg: rgba(255, 255, 255, 0.75);
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --bot-message-bg: #e0f2fe; /* A light blue for bot messages */
+    --user-message-bg: var(--primary); /* Primary blue for user messages */
+    --button-bg-light: #e6f2ff; /* Lighter blue for some buttons */
+    --button-text-dark: var(--primary-dark);
+}
+.App {
+  font-family: 'Tajawal', sans-serif;
+  max-width: 600px;
+  margin: auto;
+  padding: 1rem;
+  text-align: center;
+  background: #fdfdfd;
+}
+
+.chat-container {
+  background: #ffffff;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  height: 400px;
+  overflow-y: auto;
+  text-align: left;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.message {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  max-width: 80%;
+  border-radius: 8px;
+  line-height: 1.4;
+}
+
+.message.user {
+  background: #e0f7fa;
+  align-self: flex-end;
+  text-align: right;
+  margin-left: auto;
+}
+
+.message.bot {
+  background: #f1f8e9;
+  align-self: flex-start;
+  text-align: left;
+  margin-right: auto;
+}
+
+.input-container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.suggestions {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  text-align: left;
+}
+
+.form input,
+.form select {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.form button {
+  background-color: #aed581;
+  border: none;
+  padding: 0.6rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.form button:hover {
+  background-color: #9ccc65;
+}
+
+

@@ -1,0 +1,406 @@
+@import "@fontsource/poppins";
+@import "@fontsource/cormorant-garamond";
+@import url("https://fonts.googleapis.com/css2?family=Antic&display=swap");
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  background-image: url('');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: rgba(154, 182, 206, 0.1); /* 0.8 = 80% opacity */
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.homepage-wrapper {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.homepage-content {
+  max-width: 540px;
+  width: 100%;
+  text-align: left;
+  margin: 0 auto;
+}
+
+/* 🌈 Vibrant Content Box */
+.content-box {
+  position: relative;
+  background: linear-gradient(135deg, #ffffffcc, #f6faffee);
+  padding: 2.5rem;
+  border-radius: 22px;
+  box-shadow: 0 14px 32px rgba(100, 140, 180, 0.25);
+  border: 2px solid #d8eaff;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  z-index: 1;
+  
+}
+
+.content-box:hover {
+  transform: scale(1.01);
+  box-shadow: 0 18px 40px rgba(100, 140, 180, 0.3);
+  border-color: #adcfff;
+}
+
+/* 🎨 Accent bar inside the content-box */
+.content-box::before {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 0rem;
+  background: linear-gradient(to right, #ffffff, #91cfff);
+  border-radius: 0px;
+  margin: 0rem -1.5rem 1rem auto;
+}
+
+.content-box::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(107,159,220,0.15) 20%, transparent 70%);
+  border-radius: 1%;
+  z-index: 0;
+}
+
+.content-box .main-header-block,
+.content-box .subtitle,
+.content-box .button-group,
+.content-box .feature-list {
+  position: relative;
+  z-index: 2;
+}
+.main-header-block {
+  display: flex;
+  align-items:center;
+  gap: 0rem;
+  justify-content: center;
+}
+
+.app-logo {
+  width: 10rem;
+  height: 1;
+  margin-bottom:-1.1rem;
+  margin-left: -3rem;
+  margin-right: -1.5rem;
+  margin-top: -2.5rem;
+  filter: drop-shadow(4px 4px 10px rgba(0, 0, 0, 0.2));
+  
+}
+
+.homepage-content h1 {
+  font-family:"Antic Didone", serif;
+  font-size: 4.5rem;
+  font-weight: 700;
+  scroll-padding-block-start: -5rem;
+  color: #054690;
+  margin-left: -1rem;
+  margin-bottom: -1rem;
+  margin-top: -2.7rem;
+  text-align: center;
+  line-height: 1.5;
+  word-break: break-word;
+  letter-spacing: 0.4rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.rainbow-heading {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+  word-break: break-word;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.rainbow-heading span {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  letter-spacing: -0.5px
+}
+.animated-blue-heading {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+  word-break: break-word;
+  letter-spacing: -0.5px;
+  background: linear-gradient(
+    90deg,
+    #1462bc
+  );
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerBlue 12s ease-in-out infinite;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.06);
+}
+
+@keyframes shimmerBlue {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.subtitle {
+  font-family:'Antic Didone', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  font-style:normal;
+  color:#215fa5;
+  margin: 1rem 0rem 3rem;
+  line-height: 1;
+  text-align:center;
+  margin-left: 1.3rem;
+  letter-spacing: 0.1rem;
+
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 2.5rem;
+  justify-content:center;
+
+}
+
+.btn {
+  padding: 1rem 2.5rem;
+  font-size: 1.05rem;
+  border-radius: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  min-width: 8rem;
+  text-align: center;
+  border: none;
+}
+
+.primary-btn {
+  background-color: #0966d0;
+  color: #ffffff;
+  min-width: 17rem;
+}
+
+.primary-btn:hover {
+  background-color: #054690;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.secondary-btn {
+  background-color: white;
+  border: 2px solid #6b9fdc;
+  color: #6b9fdc;
+}
+
+.secondary-btn:hover {
+  background-color: #f1f7ff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.primary-btn:active,
+.secondary-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.1s ease;
+}
+
+@keyframes bounce {
+  0%   { transform: scale(0.97); }
+  50%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.btn.clicked {
+  animation: bounce 1s ease;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0 1rem;
+  margin: 0 auto;
+  margin-top: 2.9rem;
+  max-width: 350px;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: bold;
+  font-size: 1.15rem;
+  color: #000000;
+  padding-left: 0.19rem;
+  margin-left: 4.1rem;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  justify-content:flex-start;
+  gap: 0.4rem;
+  margin-bottom: 1.7rem;
+
+}
+
+.feature-list li svg {
+  flex-shrink: 0;
+  color: #6b9fdc;
+}
+
+/* 🌐 Tablet */
+@media (max-width: 992px) {
+  .homepage-content {
+    max-width: 620px;
+  }
+
+  .homepage-content h1 {
+    font-size: 4rem;
+  }
+
+  .subtitle {
+    font-size: 1.15rem;
+  }
+
+  .btn {
+    font-size: 1rem;
+  }
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .homepage-wrapper {
+    padding: 1.5rem;
+    flex-direction: column;
+  }
+
+  .main-header-block {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .app-logo {
+    width: 4rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .homepage-content h1 {
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 0.1rem;
+    font-weight: 1000;
+    text-align:center;
+    
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 90%;
+    max-width: 280px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .feature-list {
+    font-size: 1rem;
+    padding-left: 0;
+  }
+}
+
+/* 📲 Small Phones */
+@media (max-width: 480px) {
+  .homepage-wrapper {
+    padding: 1rem;
+  }
+
+.main-header-block {
+  
+  align-items: center;
+  justify-content: center;
+  gap: 0rem;flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+  .homepage-content h1 {
+    font-size: 2.3rem;
+    justify-content: flex-start;
+    align-self:flex-start;
+    font-weight:800;
+    margin-inline-start: 0;
+    margin-top: 0.5rem;
+    margin-left: -0.5rem;
+    margin-bottom: 0.5rem;
+    color: #94f4ff;
+    ;
+  
+  }
+
+  .subtitle {
+    font-size: 0.792rem;
+    font-weight: 2000;
+    padding-left: 0rem;
+    margin-left: 0.8rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  .feature-list {
+  font-size: 0.83rem;
+  text-align: justify;
+  font-family: "Cormorant Garamond", serif; 
+  width: 98%;
+  padding-left: 0.8rem;
+  padding-right: 0.5rem;
+  margin-left: 0rem; /* adjust as needed */
+  font-weight: 1000;}
+
+  
+.app-logo {
+  margin: 0;
+  width: 3.5rem;
+  height: auto;
+}
+
+    
+  
+}

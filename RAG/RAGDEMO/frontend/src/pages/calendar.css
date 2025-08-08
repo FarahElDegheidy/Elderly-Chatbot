@@ -1,0 +1,106 @@
+/* --- Styling for the new Refresh Icon Button --- */
+:root {
+    --primary: #0966d0;
+    --primary-dark: #054690;
+    --accent: #4d94ea;
+    --text-dark: #1f1f1f;
+    --text-light: #ffffff;
+    --bg-light: #f5faff;
+    --form-bg: rgba(255, 255, 255, 0.75);
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --bot-message-bg: #e0f2fe; /* A light blue for bot messages */
+    --user-message-bg: var(--primary); /* Primary blue for user messages */
+    --button-bg-light: #e6f2ff; /* Lighter blue for some buttons */
+    --button-text-dark: var(--primary-dark);
+}
+.refresh-icon-button {
+    background: none; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer on hover */
+    padding: 5px; /* Small padding around the icon */
+    display: flex; /* To center the icon if needed */
+    align-items: center; /* Vertically center icon */
+    justify-content: center; /* Horizontally center icon */
+    color: var(--primary); /* Match arrow color or your desired icon color */
+    transition: color 0.2s ease, transform 0.2s ease;
+    border-radius: 50%; /* Make it circular */
+}
+
+.refresh-icon-button:hover {
+    color: var(--primary-dark); /* Darker color on hover */
+    transform: rotate(30deg); /* Subtle rotate on hover */
+}
+
+/* --- Styling for the new group containing the refresh icon and arrow --- */
+.header-icons-group {
+    display: flex;
+    align-items: center; /* Vertically align the icon and arrow */
+    gap: 8px; /* Space between the refresh icon and the dropdown arrow */
+}
+
+/* --- Ensure other styles are compatible --- */
+/* Your .calendar-events-collapsible-header should still push the group to the right */
+.calendar-events-collapsible-header {
+    display: flex;
+    justify-content: space-between; /* This pushes "Upcoming Events" left and .header-icons-group right */
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--button-bg-light);
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--primary);
+    margin-top: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.calendar-events-collapsible-header:hover {
+    background-color: var(--accent);
+    color: var(--text-light);
+    transform: translateY(-1px);
+}
+
+/* Hover for the arrow when the main header is hovered */
+.calendar-events-collapsible-header:hover .dropdown-arrow {
+    color: var(--text-light);
+}
+
+/* Arrow rotation */
+.calendar-events-collapsible-header.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* You can also make the refresh icon change color if the parent header is hovered,
+   not just when the icon itself is hovered: */
+.calendar-events-collapsible-header:hover .refresh-icon-button {
+    color: var(--text-light); /* Change color with parent hover */
+}
+
+/* Existing .add-event-button styles (make sure they are still good) */
+.add-event-button {
+    /* ... your existing styles ... */
+    display: flex;
+    justify-content: space-between; /* This pushes "Upcoming Events" left and .header-icons-group right */
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--button-bg-light);
+    padding: 12px 15px;
+    border-radius: 10px;
+    border-color: var(--accent);
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--primary);
+    margin-top: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px var(--accent);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.add-event-button:hover {
+    background-color: var(--accent);
+    color: var(--text-light);
+    transform: translateY(-1px);
+}

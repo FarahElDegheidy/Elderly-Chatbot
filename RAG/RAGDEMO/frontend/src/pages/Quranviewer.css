@@ -1,0 +1,385 @@
+/* QuranViewer.css */
+
+/* Define CSS Variables for easy theme management */
+:root {
+    --primary: #0966d0;
+    --primary-dark: #054690;
+    --accent: #4d94ea;
+    --text-dark: #1f1f1f;
+    --text-light: #ffffff;
+    --bg-light: #f5faff;
+    --form-bg: rgba(255, 255, 255, 0.75);
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --bot-message-bg: #e0f2fe; /* A light blue for bot messages */
+    --user-message-bg: var(--primary); /* Primary blue for user messages */
+    --button-bg-light: #e6f2ff; /* Lighter blue for some buttons */
+    --button-text-dark: var(--primary-dark);
+}
+
+.quran-viewer-container {
+    background-color: var(--form-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 0; /* Remove padding from here, apply to inner sections */
+    width: 100%;
+    max-height: 80vh; /* Set a defined max-height for the entire viewer */
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+
+    /* NEW: Make the container itself the main scrollable area */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* This makes the entire container scrollable */
+    position: relative; /* Needed for sticky positioning of children */
+}
+
+/* New style for when QuranViewer is in compact mode */
+.quran-viewer-container.compact-mode {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    min-height: 0;
+    overflow-y: visible; /* Ensure no internal scrollbar in compact mode */
+}
+
+/* Styles for the fixed header section (Surah select & Audio controls) */
+.quran-viewer-fixed-header {
+    background-color: var(--form-bg); /* Match container background */
+    padding: 24px; /* Apply original container padding here */
+    border-radius: 12px 12px 0 0; /* Rounded top corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow below header */
+    z-index: 10; /* Ensure it stays on top of scrolling content */
+    flex-shrink: 0; /* Prevent it from shrinking */
+
+    /* NEW: Make this section sticky to the top of its scrollable parent */
+    position: sticky;
+    top: 0; /* Stick to the top of the quran-viewer-container */
+}
+
+/* Controls (Surah Selector & Audio Controls) - now inside fixed header */
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0; /* Remove margin-bottom as its parent (fixed-header) handles spacing */
+    /* Reset any sticky/positioning properties from previous attempts */
+    position: static;
+    top: auto;
+    background-color: transparent;
+    padding: 0;
+    border-bottom: none;
+    border-radius: 0;
+    width: auto;
+    box-sizing: content-box;
+    z-index: auto;
+}
+
+.controls label {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.controls select {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 15px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    background-color: var(--bg-light);
+    font-size: 1rem;
+    color: var(--text-dark);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2C197.3L159.2%2C69.5c-3.2-3.2-8.4-3.2-11.6%2C0L5.4%2C197.3c-3.2%2C3.2-3.2%2C8.4%2C0%2C11.6l10.8%2C10.8c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l120.7-120.7c3.2-3.2%2C8.4-3.2%2C11.6%2C0l120.7%2C120.7c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l10.8-10.8C290.2%2C205.7%2C290.2%2C200.5%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 12px;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.controls select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(77, 148, 234, 0.2);
+    outline: none;
+}
+
+/* Styles for all buttons within the audio controls group */
+.audio-controls-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    align-self: flex-start;
+}
+
+.audio-controls-group button {
+    background-color: var(--primary);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px; /* Default rounded corners for all buttons in group */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+}
+
+/* Specific styles for previous/next buttons (rectangular, icon-only) */
+.audio-controls-group button:first-child,
+.audio-controls-group button:last-child {
+    padding: 10px 12px; /* Adjusted padding to be narrower */
+    border-radius: 8px; /* Rectangular corners */
+    width: auto; /* Allow width to adjust to content */
+    height: auto; /* Allow height to adjust to content */
+}
+
+/* Ensure the main play/pause button retains its original padding and size */
+.audio-controls-group button:nth-child(2) {
+    padding: 10px 20px;
+    border-radius: 8px;
+    width: auto;
+    height: auto;
+    font-size: 1rem;
+}
+
+
+.controls button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.controls button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+
+/* Loading and Error Messages */
+p {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-top: 20px;
+}
+
+.error-message {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+/* Styles for the scrollable content section */
+.quran-viewer-scrollable-content {
+    flex-grow: 1; /* Allows it to take up remaining space */
+    overflow-y: visible; /* Content itself doesn't need its own scrollbar if parent scrolls */
+    padding: 0 24px 24px 24px; /* Add padding similar to original container, but only for content area */
+    /* No padding-top needed here, as the fixed-header will occupy the space */
+}
+
+article {
+    background-color: var(--bg-light);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--primary);
+}
+
+header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--primary-dark);
+    line-height: 1.2;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-top: 0;
+}
+
+.ayahs-container {
+    line-height: 1.8;
+}
+
+.ayah {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed var(--accent);
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.ayah:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+/* Style for the currently playing ayah */
+.ayah.highlight-ayah {
+    background-color: var(--bot-message-bg);
+    border-radius: 8px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+
+.ayah-number {
+    font-weight: bold;
+    color: var(--primary-dark);
+    margin-left: 8px;
+    margin-right: 0;
+    flex-shrink: 0;
+}
+
+.arabic-text {
+    display: inline-block;
+    font-family: 'Amiri', 'Scheherazade New', 'Noto Naskh Arabic', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+    text-align: right;
+    flex-grow: 1;
+}
+
+.ayah-translation {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-dark);
+    text-align: left;
+}
+
+/* Styles for the "القرآن الكريم" button in the chat header */
+.header-controls button {
+    background-color: var(--button-bg-light);
+    color: var(--button-text-dark);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    font-size: 1.01rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-controls button:hover {
+    background-color: #649ee5be;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    color: white;
+}
+
+.header-controls button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .quran-viewer-container {
+        padding: 15px;
+    }
+
+    header h2 {
+        font-size: 2rem;
+    }
+
+    .arabic-text {
+        font-size: 1.5rem;
+    }
+
+    .controls select {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+
+    .controls button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    .audio-controls-group button {
+        padding: 8px;
+        width: 36px;
+        height: 36px;
+    }
+    .audio-controls-group button:nth-child(2) {
+        padding: 8px 15px;
+    }
+
+    .header-controls button {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .quran-viewer-container {
+        padding: 10px;
+    }
+
+    header h2 {
+        font-size: 1.8rem;
+    }
+
+    .arabic-text {
+        font-size: 1.3rem;
+    }
+
+    .controls select {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+
+    .controls button {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    .audio-controls-group button {
+        padding: 6px;
+        width: 32px;
+        height: 32px;
+    }
+    .audio-controls-group button:nth-child(2) {
+        padding: 6px 12px;
+    }
+
+    .header-controls button {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+}

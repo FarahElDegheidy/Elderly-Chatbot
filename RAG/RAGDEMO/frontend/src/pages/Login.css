@@ -1,0 +1,275 @@
+@import url("https://fonts.googleapis.com/css2?family=Antic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+:root {
+  --primary: #0966d0;
+  --primary-dark: #054690;
+  --accent: #4d94ea;
+  --text-dark: #1f1f1f;
+  --text-light: #ffffff;
+  --bg-light: #f5faff;
+  --form-bg: rgba(255, 255, 255, 0.75);
+  --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  --radius: 40px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom right, #e0f7faa9, #fefefe95);
+  margin: 0;
+  padding: 0;
+  color: var(--text-dark);
+}
+
+.signin-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: radial-gradient(circle at top left, #d8eaf997, #ffffffa9);
+  backdrop-filter: blur(6px);
+}
+
+
+.signin-form {
+  background: var(--form-bg);
+  padding: 48px 36px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(20px);
+  
+  
+}
+
+.signin-form:hover {
+  transform: translateY(-4px);
+}
+
+.signin-form h2 {
+  font-family: "Antic-Didone", serif;
+  font-size: 3.56rem;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+  color: #054fa4ea;
+  margin-bottom: 30px;
+  margin-right: 2.6rem;
+  margin-top: 0;
+}
+
+.signin-form input[type="email"],
+.signin-form input[type="password"] {
+  width: 90%;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border: 1px solid #c9dafc;
+  border-radius: var(--radius);
+  background-color: #ffffff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.signin-form input:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow:#cdeeffaa;
+  
+}
+
+.signin-form button[type="submit"] {
+  background-color: var(--primary);
+  color: #fff;
+  padding: 14px;
+  width: 90%;
+  border: none;
+  border-radius: 40px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.signin-form button[type="submit"]:hover {
+  background-color: var(--primary-dark);
+  transform: scale(1.015);
+}
+
+.signin-form .form-switch-text {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+}
+
+.signin-form .form-link {
+  font-family: "Antic-Didone", serif;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  font-weight: bold;
+  font-size:0.97rem;
+  
+
+}
+
+.signin-form .form-link:hover {
+  color: #026c9d;
+}
+
+.signin-form p[style*="color: red"] {
+  color: #ff4d4d !important;
+  font-size: 14px;
+  margin-top: -4px;
+  margin-bottom: 10px;
+}
+
+
+.remember-me-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -0.7rem;
+  padding-left: 1.5rem; /* Adjust left space */
+  box-sizing: border-box;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem; /* Slightly smaller spacing */
+  color: black;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  font-weight: 500;
+  font-family: "Cormorant Garamond", serif;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+
+}
+
+.remember-me input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #0966d0;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle; /* Aligns with label */
+}
+
+.remember-me label {
+  font-size: 0.85rem;
+  line-height: 2;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.signin-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  margin-bottom: 30px;
+  flex-wrap: nowrap;
+  text-align: center;
+}
+
+.signin-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  
+}
+
+@media (max-width: 768px) {
+  .signin-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .signin-form h2 {
+    font-size: 2.3rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .signin-logo {
+    width: 52px;
+    height: 52px;
+    margin-right: 0.1rem;
+  }
+
+  .signin-form h2 {
+    font-size: 1.8rem;
+    margin-right: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .signin-form {
+    padding: 32px 20px;
+  }
+
+  .signin-form h2 {
+    font-size: 2.5rem;
+  }
+
+  .signin-form input,
+  .signin-form button {
+    font-size: 15px;
+  }
+
+
+}
+
+@media (max-width: 480px) {
+  .signin-form input,
+  .signin-form button {
+    width: 100%; /* utilize full width */
+    font-size: 14px;
+  }
+
+  .signin-form h2 {
+    font-size: 2rem;
+  }
+}
+
+/* Optional: dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #101827;
+    color: var(--text-light);
+  }
+
+  .signin-form {
+    background: rgba(25, 25, 40, 0.75);
+    color: var(--text-light);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .signin-form input {
+    background-color: #1e2a3a;
+    color: #ffffff;
+    border-color: #39495e;
+  }
+
+  .signin-form button {
+    background-color: #1976d2;
+  }
+
+  .signin-form .form-switch-text,
+  .remember-me {
+    color: #cfd8dc;
+  }
+}

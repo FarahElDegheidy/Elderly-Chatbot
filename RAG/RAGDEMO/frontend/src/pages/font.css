@@ -1,0 +1,240 @@
+/* font.css */
+
+/* Base font size for the entire document */
+html {
+    font-size: 100%; /* Default: 16px */
+}
+
+/* Comfort Mode Styles */
+body.comfort-mode {
+    /* Example: adjust colors for comfort mode */
+    --primary: #054690; /* Darker blue for comfort mode primary */
+    --primary-dark: #022a5a;
+    --accent: #3a7bd5;
+    --text-dark: #000000;
+    --text-light: #f0f0f0;
+    --bg-light: #e0eaf5; /* Slightly darker light background */
+    --form-bg: rgba(224, 234, 245, 0.9); /* More opaque form background */
+    --bot-message-bg: #cceeff; /* Lighter blue for bot messages */
+    --user-message-bg: var(--primary);
+    --button-bg-light: #d0e0f0; /* Slightly darker button background */
+    --button-text-dark: var(--primary-dark);
+
+    /* Comfort mode overrides from user's provided CSS */
+    background-color: #1e1e1e;
+    color: #f5f5f5;
+}
+
+body.comfort-mode .chat-window,
+body.comfort-mode .info-panel,
+body.comfort-mode .chat-history-bar,
+body.comfort-mode .user-profile-box,
+body.comfort-mode .recipe-modal {
+    background-color: #2c2c2c !important;
+    color: #f5f5f5;
+}
+
+body.comfort-mode .message.bot {
+    background-color: #3a3a3a !important;
+    color: #f1f1f1;
+}
+
+body.comfort-mode .message.user {
+    background-color: #a8563a !important;
+    color: white;
+}
+
+body.comfort-mode .favourites-box li:hover,
+body.comfort-mode .chat-log-item:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+body.comfort-mode .input-container input {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+body.comfort-mode .input-container button,
+body.comfort-mode .add-input button {
+    background-color: #a14d27;
+}
+
+body.comfort-mode .dropdown-header {
+    color: #fcb398;
+}
+
+
+/* -------------------------------------------------------------------------- */
+/* Font Size Selector (FontSizeSelector component) */
+/* -------------------------------------------------------------------------- */
+
+.font-size-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content within the flex container */
+    gap: 8px; /* Increased gap slightly for better spacing */
+    /* The parent .history-control-item in Chat.css already provides the button styling */
+    /* So, we only need to style the internal elements and ensure no conflicting styles */
+    padding: 0; /* Remove padding from this div as it's handled by the select element itself */
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    width: 100%; /* Ensure it takes full width of its parent */
+    box-sizing: border-box;
+    color: inherit; /* Inherit text color from parent */
+    font-family: inherit; /* Inherit font family from parent */
+    
+}
+
+.font-size-selector svg { /* Style for the ZoomIn icon */
+    color: inherit; /* Inherit color from parent (.history-control-item) */
+    flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.font-size-selector select {
+    /* Reset default browser styles for select */
+    -webkit-appearance: none; /* Remove default arrow on WebKit browsers */
+    -moz-appearance: none; /* Remove default arrow on Firefox */
+    appearance: none; /* Remove default arrow */
+
+    /* Custom arrow using background-image */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23054690' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 16px;
+
+    /* Match button styling */
+    flex: 1; /* Allow select to take available space */
+    padding: 8px 18px; /* Match new-chat-btn padding */
+    padding-right: 2.5rem; /* Make space for the custom arrow */
+    border-radius: 25px; /* Match new-chat-btn border-radius */
+    border: none !important; /* Force remove all borders, including from user's original CSS */
+    outline: none !important; /* Force remove focus outline */
+    box-shadow: none !important; /* Force remove any default box-shadow */
+    background-color: transparent !important; /* Force transparent background */
+    color: inherit; /* Inherit text color from parent */
+    font-family: inherit; /* Inherit font family from parent */
+    font-size: inherit; /* Inherit font size from parent */
+    cursor: pointer;
+    text-align: center; /* Center the text */
+    text-align-last: center; /* For Firefox to center selected option */
+    -webkit-box-sizing: border-box; /* For Safari/Chrome */
+    -moz-box-sizing: border-box; /* For Firefox */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Ensure options within the select are readable */
+.font-size-selector select option {
+    background-color: var(--button-bg-light); /* Background for dropdown options */
+    color: var(--button-text-dark); /* Text color for dropdown options */
+    font-family: "Cormorant Garamond", serif;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Comfort Mode Toggle (ComfortModeToggle component) */
+/* -------------------------------------------------------------------------- */
+
+.accessibility-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content within the flex container */
+    gap: 8px;
+    /* The parent .history-control-item in Chat.css already provides the button styling */
+    /* So, we only need to style the internal elements and ensure no conflicting styles */
+    padding: 0; /* Remove padding from this div as it's handled by the label */
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    width: 100%; /* Ensure it takes full width of its parent */
+    box-sizing: border-box;
+    color: inherit; /* Inherit text color from parent */
+    font-family: inherit; /* Inherit font family from parent */
+    cursor: pointer; /* Indicate it's clickable */
+    position: relative; /* For positioning the custom toggle switch */
+}
+
+/* Visually hide the default checkbox */
+.accessibility-toggle input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none; /* Make sure it doesn't interfere with label clicks */
+}
+
+.accessibility-toggle .toggle-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Center text and switch */
+    gap: 8px;
+    flex: 1; /* Allow label to take available space */
+    padding: 8px 0px; /* Match new-chat-btn padding */
+    border-radius: 25px; /* Match new-chat-btn border-radius */
+    cursor: pointer;
+    font-size: inherit; /* Inherit font size from parent */
+    font-weight: bolder;
+    font-family: inherit; /* Inherit font family from parent */
+    color: inherit; /* Inherit text color from parent */
+    background-color: transparent; /* Inherit background from parent */
+    box-sizing: border-box;
+    white-space: nowrap; /* Prevent text from wrapping */
+
+    /* Original user's style, adjusted for button look */
+    font-weight: bold; /* Kept from user's original */
+    color: inherit; /* Inherit from parent, not fixed #2f5db8 */
+    margin-bottom: 0; /* Remove margin-bottom to align with button */
+}
+
+/* Custom toggle switch styling */
+.accessibility-toggle .toggle-label::after {
+    content: '';
+    width: 34px; /* Width of the switch track */
+    height: 18px; /* Height of the switch track */
+    background-color: var(--accent); /* Accent color for off state */
+    border-radius: 18px; /* Rounded corners for the track */
+    position: relative;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0; /* Prevent switch from shrinking */
+}
+
+.accessibility-toggle .toggle-label::before {
+    content: '';
+    width: 14px; /* Size of the toggle handle */
+    height: 14px; /* Size of the toggle handle */
+    background-color: var(--text-light); /* White handle */
+    border-radius: 50%; /* Make it round */
+    position: absolute;
+    left: calc(100% - 34px + 2px); /* Position on the left side of the track (off state) */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    transform: translateX(0);
+    z-index: 1; /* Ensure handle is above the track */
+}
+
+/* Checked state for the toggle */
+.accessibility-toggle input[type="checkbox"]:checked + .toggle-label::after {
+    background-color: var(--primary); /* Primary color for on state */
+    
+}
+
+.accessibility-toggle input[type="checkbox"]:checked + .toggle-label::before {
+    transform: translateX(16px); /* Move handle to the right for on state */
+    background-color: var(--text-light); /* Keep handle white */
+}
+
+/* Small text below the toggle (if needed) */
+.accessibility-toggle small {
+    display: none; /* Hide this small text as it's not part of the button look */
+}
+
+/* Original user's .ComfortModeToggle (if it's still used as a wrapper) */
+.ComfortModeToggle {
+    margin-top: 15px; /* Kept from user's original */
+    display: flex;
+    flex-direction: row; /* Kept from user's original */
+    align-items: center; /* Changed from flex-start to center for better alignment with button */
+    justify-content: center; /* Added to center content if it's a direct child of history-controls */
+    width: 100%; /* Ensure it takes full width of its parent */
+    box-sizing: border-box;
+}

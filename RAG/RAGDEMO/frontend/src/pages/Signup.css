@@ -1,0 +1,404 @@
+/* Signup.css */
+@import url("https://fonts.googleapis.com/css2?family=Oldenburg&family=Cormorant+Garamond:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Antic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+:root {
+  --primary: #0966d0;
+  --primary-dark: #054690;
+  --accent: #4d94ea;
+  --text-dark: #1f1f1f;
+  --text-light: #ffffff;
+  --bg-light: #f5faff;
+  --form-bg: rgba(255, 255, 255, 0.75);
+  --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  --radius: 40px;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Cormorant Garamond", serif;
+  background-color:var(--form-bg);
+  height: 100%;
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+
+.signup-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: radial-gradient(circle at top left, #d8eaf997, #ffffffa9);
+  backdrop-filter: blur(6px);
+}
+
+
+.signup-form {
+  background: var(--form-bg);
+  padding: 48px 36px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.signin-header {
+  font-family: "Antic-Didone", serif;
+  font-size: 2.48rem;
+  font-weight: 1000;
+  letter-spacing: 0.1rem;
+  color: #054fa4ea;
+  margin-bottom: 1px;
+  margin-right: 2.6rem;
+  margin-top: 0;}
+
+
+.signin-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-top: 0.15rem;
+
+}
+
+.signup-form input{
+  width: 90%;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #c9dafc;
+  border-radius: var(--radius);
+  background-color: #ffffff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  font-family: "Cormorant Garamond", serif;
+  
+}
+
+.custom-select-wrapper {
+  position: relative;
+  width: 90%;
+  margin-bottom: 20px;
+}
+
+.custom-select-wrapper select {
+  width: 100%;
+  padding: 12px 16px;
+  padding-right: 40px; /* space for icon */
+  font-size: 16px;
+  border: 1px solid #c9dafc;
+  border-radius: var(--radius);
+  background-color: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-family: "Cormorant Garamond", serif;
+  margin-left: 1.3rem;
+  margin-bottom:0rem;
+}
+
+.select-icon {
+  position: absolute;
+  right: -0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #0a233a;
+  font-size: 24px;
+}
+
+/* Original checkbox-group and related styles (untouched as per instruction) */
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.checkbox-group label {
+  font-size: 0.95rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.checkbox-box:hover {
+  background-color: #0966d03b;
+}
+/* End original checkbox-group and related styles */
+
+
+.signup-form button {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Cormorant Garamond", serif;
+  margin-top: 10px;
+}
+
+.signup-form button:hover {
+  background-color: var(--primary-dark);
+}
+
+.signup-form button:disabled {
+  background-color: var(--accent);
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* Scrollbar styles (untouched as per instruction) */
+.signup-form::-webkit-scrollbar {
+  width: 8px;
+}
+
+.signup-form::-webkit-scrollbar-track {
+  background: #f5e9dc;
+  border-radius: 10px;
+}
+
+.signup-form::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 10px;
+  border: 2px solid #f5e9dc;
+}
+
+.signup-form::-webkit-scrollbar-thumb:hover {
+  background-color:var(--accent);
+}
+/* End scrollbar styles */
+
+
+/* Original toggle-checkbox-block and related styles (untouched as per instruction) */
+.toggle-checkbox-block {
+  margin-bottom: 20px;
+}
+
+
+.fav-wrapper {
+  width: 20px;
+  height: 20px;
+}
+
+.fav-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.toggle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Antic-Didone", serif;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 1.01rem;
+  margin-bottom: 10px;
+  margin-left: 2rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.plus-icon {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-right: 4.19rem;
+}
+
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  direction: rtl;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 45px;
+  border-radius: 10px;
+  background-color:#4d94ea2f;
+  border: 10 px, solid;
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkbox-box {
+  background-color: #4d94ead2;
+  color: white;
+  border-color: var(--accent);
+}
+/* End original toggle-checkbox-block and related styles */
+
+
+
+.error-message {
+  color: #e74c3c;
+  text-align: center;
+  font-size: 0.95rem;
+  margin: 15px 0 10px;
+  font-weight: 600;
+}
+
+
+.form-switch-text {
+  text-align: center;
+  font-size: 1.05rem;
+  margin: 20px 0;
+  color:var(--primary);
+  font-family: "Cormorant Garamond", serif;
+}
+
+.form-link {
+  color: var(--primary);
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.form-link:hover {
+  color: var(--primary);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+}
+
+/* === Media Queries for Responsiveness === */
+
+/* Tablets (landscape) and smaller desktops */
+@media (max-width: 992px) {
+  .signup-form {
+    padding: 35px;
+    max-width: 500px;
+  }
+
+  .signup-form h2 {
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+  }
+}
+
+/* Tablets (portrait) and larger phones */
+@media (max-width: 768px) {
+  .signup-wrapper {
+    padding: 15px;
+    background-size: cover;
+  }
+
+  .signup-form {
+    padding: 25px;
+    width: 90%;
+    max-height: 85vh;
+  }
+
+  .signup-form h2 {
+    font-size: 2.1rem;
+    margin-bottom: 20px;
+  }
+
+  .signup-form input,
+  .signup-form button {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+  
+  .plus-icon {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-right: 4.19rem;
+}
+}
+
+/* Small Phones */
+@media (max-width: 480px) {
+  .signup-wrapper {
+    padding: 10px;
+  }
+
+  .signup-form {
+    padding: 20px;
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .signup-form h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+
+  .signup-form input,
+  .signup-form button {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .form-switch-text {
+    font-size: 0.95rem;
+    margin: 15px 0;
+  }
+
+  .plus-icon {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin-right: 3.5rem;
+  }
+  .fav-wrapper {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+  }
+
+.fav-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.toggle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items:flex-start;
+  font-family: "Cormorant Garamond", serif; 
+  font-weight: 1000;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 0.89rem;
+  margin-bottom: 10px;
+  margin-left: 2rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+}
